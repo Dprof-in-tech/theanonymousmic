@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createEvent, getAllEvents, getEventById } from '@/lib/db';
+import { createEvent, getAllEvents } from '@/lib/db';
 
 // GET /api/events - Get all events
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const events = await getAllEvents();
     return NextResponse.json(events);
@@ -42,37 +42,6 @@ export async function POST(req: NextRequest) {
     console.error('Error creating event:', error);
     return NextResponse.json(
       { error: 'Failed to create event' },
-      { status: 500 }
-    );
-  }
-}
-
-// GET /api/events/:id - Get a specific event
-export async function getEventbyId(request: NextRequest, { params }: { params: { id: string } }) {
-  try {
-    const eventId = parseInt(params.id);
-    
-    if (isNaN(eventId)) {
-      return NextResponse.json(
-        { error: 'Invalid event ID' },
-        { status: 400 }
-      );
-    }
-    
-    const event = await getEventById(eventId);
-    
-    if (!event) {
-      return NextResponse.json(
-        { error: 'Event not found' },
-        { status: 404 }
-      );
-    }
-    
-    return NextResponse.json(event);
-  } catch (error) {
-    console.error('Error fetching event:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch event' },
       { status: 500 }
     );
   }

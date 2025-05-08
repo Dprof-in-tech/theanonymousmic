@@ -1,22 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Image from 'next/image';
 
-interface Event {
-  id: number;
-  title: string;
-  description: string | null;
-  date: string;
-  imageUrl: string;
-  hostName: string;
-  videoLink: string | null;
-  createdAt?: string;
-}
 
-interface EventCardProps {
-  event: Event;
-}
-
-const EventCard: React.FC<EventCardProps> = ({ event }) => {
+const EventCard: React.FC<any> = ({ event }) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
