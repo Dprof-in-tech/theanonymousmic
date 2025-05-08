@@ -1,36 +1,213 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Anonymous Mic
 
-## Getting Started
+The Anonymous Mic is a platform that enables anonymous messaging to featured individuals. It allows admins to create posts with people's photos and names, then generate unique anonymous links that can be shared. Visitors can access these links to send completely anonymous messages, with no login or tracking required.
 
-First, run the development server:
+## Features
 
+### Admin Panel
+- Upload people's pictures and names (or nicknames)
+- Generate unique anonymous links for each person's post
+- View messages sent to each anonymous post
+
+### Public/Anonymous Page
+- Visitors can access a shared link at theanonymousmic.com
+- They see the person's photo
+- They can type and submit an anonymous message
+- No login, no tracking—completely anonymous
+
+### Database
+- Store each person's post (name, picture, unique link)
+- Store submitted anonymous messages and link them to the right post
+
+## Tech Stack
+
+- **Frontend**: Next.js, React, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: Vercel Postgres
+- **Deployment**: Vercel
+
+## Installation
+
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/theanonymousmic.git
+cd theanonymousmic
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables
+Create a `.env.local` file with the following variables:
+```
+POSTGRES_URL="your_postgres_connection_string"
+POSTGRES_PRISMA_URL="your_postgres_prisma_connection_string"
+POSTGRES_URL_NON_POOLING="your_postgres_non_pooling_connection_string"
+POSTGRES_USER="postgres_user"
+POSTGRES_HOST="postgres_host"
+POSTGRES_PASSWORD="postgres_password"
+POSTGRES_DATABASE="postgres_database"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Initialize the database
+```bash
+npm run setup-db
+```
 
-## Learn More
+5. Start the development server
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+6. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+theanonymousmic/
+├── public/
+│   └── images/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── posts/
+│   │   │   ├── messages/
+│   │   │   └── events/
+│   │   ├── admin/
+│   │   ├── p/
+│   │   ├── about/
+│   │   ├── host/
+│   │   ├── page.tsx
+│   │   └── layout.tsx
+│   ├── components/
+│   ├── lib/
+│   └── types/
+├── scripts/
+│   └── setup-db.ts
+```
 
-## Deploy on Vercel
+## Database Schema
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sql
+CREATE TABLE IF NOT EXISTS posts (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  nickname VARCHAR(255),
+  image_url VARCHAR(512) NOT NULL,
+  unique_link VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+CREATE TABLE IF NOT EXISTS messages (
+  id SERIAL PRIMARY KEY,
+  post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+  content TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS events (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description TEXT,
+  date VARCHAR(255) NOT NULL,
+  video_link VARCHAR(512),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## Setting Up Vercel Postgres
+
+1. Create a Vercel account if you don't have one
+2. Create a new project and link it to your repository
+3. Go to the Storage tab in your Vercel dashboard
+4. Create a new Postgres database
+5. Copy the environment variables to your `.env.local` file
+6. Deploy your application on Vercel
+
+## Deployment
+
+This application is configured for easy deployment on Vercel:
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Set up Vercel Postgres as described above
+4. Deploy
+
+## Security Considerations
+
+- No user authentication is required for sending messages
+- No IP addresses or any identifiable information is logged
+- Admin panel should be secured with proper authentication in a production environment
+
+## License
+
+[MIT](LICENSE)
+/
+├── public/
+│   └── images/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── posts/
+│   │   │   ├── messages/
+│   │   │   └── events/
+│   │   ├── admin/
+│   │   ├── p/
+│   │   ├── about/
+│   │   ├── host/
+│   │   ├── page.tsx
+│   │   └── layout.tsx
+│   ├── components/
+│   ├── lib/
+│   └── types/
+```
+
+## Database Schema
+
+```sql
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  nickname VARCHAR(255),
+  image_url VARCHAR(512) NOT NULL,
+  unique_link VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE messages (
+  id SERIAL PRIMARY KEY,
+  post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+  content TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description TEXT,
+  date DATE NOT NULL,
+  video_link VARCHAR(512),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## Deployment
+
+This application is configured for easy deployment on Vercel:
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Set up the required environment variables
+4. Deploy
+
+## Security Considerations
+
+- No user authentication is required for sending messages
+- No IP addresses or any identifiable information is logged
+- Admin panel should be secured with proper authentication in a production environment
+
+## License
+
+[MIT](LICENSE)
