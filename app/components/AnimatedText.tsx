@@ -47,8 +47,8 @@ export default function AnimatedText() {
   }, []);
 
   return (
-    <div className="w-[fit] text-right top-[20%] right-8 px-8 fixed">
-      <h1 className="text-4xl font-bold mb-3">
+    <div className="w-[fit] text-center lg:text-right bottom-20 lg:top-[20%] right-8 px-8 fixed">
+      <h1 className="text-2xl lg:text-4xl font-bold mb-3">
         {titleText}
         <span className={`${titleText.length === fullTitle.length ? 'hidden' : 'inline-block'} animate-blink`}>|</span>
       </h1>

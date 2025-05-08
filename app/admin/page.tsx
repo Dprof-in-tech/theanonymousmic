@@ -59,10 +59,10 @@ export default function AdminPage() {
   }, []);
   
   return (
-    <div className="w-full min-h-screen h-full px-8 py-12 bg-[#efefef]">
-      <div className="flex justify-between items-center mb-8">
+    <div className="w-full min-h-screen h-full px-4 lg:px-8 py-12 bg-[#efefef]">
+      <div className="flex flex-col lg:flex-row justify-between items-center mb-8 gap-4 lg:gap-0">
         <h1 className="text-2xl font-bold text-black">Admin Dashboard</h1>
-       <div className='flex gap-4 items-center'>
+       <div className='flex  gap-4 items-center'>
        <Link
           href="/admin/posts/new"
           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors"
@@ -95,7 +95,7 @@ export default function AdminPage() {
           </Link>
         </div>
       ) : (
-        <div className="bg-white rounded-md shadow-md overflow-hidden">
+        <div className="bg-white rounded-md shadow-md overflow-scroll lg:overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>

@@ -4,8 +4,8 @@ import Link from 'next/link';
 export default function AboutPage() {
   return (
     <div className="w-full px-4 py-8 bg-[url(/podcast.jpg)] bg-cover h-full bg-fixed ">
-      <div className='w-[75%] mx-auto mt-24'>
-      <h1 className="text-3xl font-bold mb-8 text-center">About The Anonymous Mic</h1>
+      <div className='w-full lg:w-[75%] mx-auto mt-24'>
+      <h1 className="text-2xl lg:text-3xl font-bold mb-8 text-center">About The Anonymous Mic</h1>
       
       <div className="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden">
         <div className="p-8">

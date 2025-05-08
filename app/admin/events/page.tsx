@@ -50,8 +50,8 @@ export default function EventsPage() {
   };
   
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
+    <div className="container mx-auto px-4 py-8 bg-[#efefef] h-screen">
+      <div className="flex flex-col gap-4 lg:flex-row justify-between items-center mb-8">
         <h1 className="text-2xl font-bold">Manage Events</h1>
         <div className="flex space-x-4 items-center">
           <Link href="/admin" className="text-green-600 hover:text-green-800">
@@ -83,7 +83,7 @@ export default function EventsPage() {
           </Link>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md overflow-scroll lg:overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>

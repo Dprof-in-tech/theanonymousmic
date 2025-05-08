@@ -73,7 +73,7 @@ export default function CreateEventPage() {
         </Link>
       </div>
       
-      <div className="bg-white rounded-lg shadow-md overflow-hidden w-1/3 text-black">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden w-full lg:w-1/3 text-black">
         <div className="p-6">
           <h1 className="text-2xl font-bold mb-6">Create New Event</h1>
           

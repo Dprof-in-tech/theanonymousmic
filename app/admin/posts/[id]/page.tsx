@@ -105,7 +105,7 @@ export default function PostDetailPage() {
   const displayName = post.nickname || post.name;
   
   return (
-    <div className="w-full min-h-screen h-full px-[64px] py-12 bg-[#efefef]">
+    <div className="w-full min-h-screen h-full px-4 lg:px-[64px] py-12 bg-[#efefef]">
       <div className="flex items-center mb-8">
         <Link href="/admin" className="text-green-600 hover:text-green-800 mr-2">
           &larr; Back to Dashboard

@@ -9,7 +9,7 @@ export default async function HomePage() {
 
   return (
     <div className="w-full h-full">
-      <section className="min-h-screen h-full w-full bg-[url(/podcast.jpg)] bg-cover bg-fixed relative">
+      <section className="min-h-screen h-full w-full bg-[url(/podcast.jpg)] bg-cover  lg:bg-cover bg-fixed relative">
         <AnimatedText />
       </section>
 
@@ -42,12 +42,12 @@ export default async function HomePage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <div className="mb-4 sm:mb-0">
-              <p className="text-sm text-gray-500">
+              <p className="text-xs lg:text-sm text-gray-500">
                 &copy; {new Date().getFullYear()} The Anonymous Mic. All rights
                 reserved.
               </p>
             </div>
-            <div className="flex space-x-6">
+            <div className="lg:flex space-x-6 hidden">
             <a
                 href="#"
                 className="text-sm text-gray-500 hover:text-green-600"

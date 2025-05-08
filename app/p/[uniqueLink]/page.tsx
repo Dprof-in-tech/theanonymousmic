@@ -18,7 +18,7 @@ export default async function PostPage({ params }: any) {
   
   return (
     <div className="w-full min-h-screen h-full flex flex-col items-center px-4 py-8 bg-[url(/podcast.jpg)] bg-cover bg-fixed">
-      <div className="bg-white rounded-lg shadow-md w-[42%] mt-24 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-md w-full lg:w-[42%] mt-24 overflow-hidden">
         <div className="p-6 text-center">
           <div className="mb-6 mx-auto relative w-40 h-40 rounded-full overflow-hidden">
             <img

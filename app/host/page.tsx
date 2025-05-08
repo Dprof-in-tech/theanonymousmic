@@ -5,8 +5,8 @@ import Image from 'next/image';
 export default function HostPage() {
   return (
     <div className="w-full px-4 py-8 bg-[url(/podcast.jpg)] bg-cover h-full bg-fixed ">
-           <div className='w-[75%] mx-auto mt-24'>
-      <h1 className="text-3xl font-bold mb-8 text-center">Meet Your Host</h1>
+           <div className='w-full lg:w-[75%] mx-auto mt-24'>
+      <h1 className="text-2xl lg:text-3xl font-bold mb-8 text-center">Meet Your Host</h1>
       
       <div className="bg-transparent backdrop-blur-sm rounded-xl overflow-hidden border border-white/10">
         <div className="p-8">
