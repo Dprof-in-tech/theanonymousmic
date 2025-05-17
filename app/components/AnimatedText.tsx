@@ -7,7 +7,7 @@ export default function AnimatedText() {
   const [titleText, setTitleText] = useState("");
   const [descriptionText, setDescriptionText] = useState("");
   const fullTitle = "The Anonymous Mic";
-  const fullDescription = "Share anonymous messages with featured individuals. No login required, completely anonymous.";
+  const fullDescription = "What They’re Afraid to Say—We Ask";
   
   useEffect(() => {
     let titleIndex = 0;

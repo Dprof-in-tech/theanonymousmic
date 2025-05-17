@@ -12,14 +12,8 @@ export default function AboutPage() {
           <section className="mb-8">
             <h2 className="text-xl font-semibold mb-4">Our Mission</h2>
             <p className="mb-4">
-              The Anonymous Mic was created to provide a safe space for open and honest 
-              communication. We believe that anonymity can sometimes allow for more genuine 
-              expression, free from the fear of judgment or consequences.
-            </p>
-            <p>
-              Our platform enables people to share thoughts, feedback, and messages with 
-              featured individuals in a completely anonymous way, fostering authentic 
-              communication that might otherwise remain unsaid.
+            Giving voice to the silent whispers by providing a creative and safe platform for anonymous expression, empowering stories that inspire change, spark dialogue, and connect humanity beyond identity,
+            sparking curiosity, laughter, and honest expression through anonymous storytelling — where voices are free, fun is fearless, and no identity is required.
             </p>
           </section>
           
