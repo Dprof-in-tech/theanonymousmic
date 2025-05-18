@@ -94,7 +94,7 @@ export default function PostDetailPage() {
           {error || 'Post not found'}
         </div>
         <div className="mt-4">
-          <Link href="/admin" className="text-green-600 hover:text-green-800">
+          <Link href="/admin" className="text-[#F1EDE5] hover:text-green-800">
             &larr; Back to Dashboard
           </Link>
         </div>
@@ -107,7 +107,7 @@ export default function PostDetailPage() {
   return (
     <div className="w-full min-h-screen h-full px-4 lg:px-[64px] py-12 bg-[#efefef]">
       <div className="flex items-center mb-8">
-        <Link href="/admin" className="text-green-600 hover:text-green-800 mr-2">
+        <Link href="/admin" className="text-[#F1EDE5] hover:text-green-800 mr-2">
           &larr; Back to Dashboard
         </Link>
       </div>
@@ -126,7 +126,7 @@ export default function PostDetailPage() {
               
               <h1 className="text-xl font-bold text-center mb-2">{displayName}</h1>
               {post.nickname && (
-                <p className="text-gray-500 text-center mb-4">{post.name}</p>
+                <p className="text-gray-700 text-center mb-4">{post.name}</p>
               )}
               
               <div className="mt-6">
@@ -142,7 +142,7 @@ export default function PostDetailPage() {
                       />
                       <button
                         onClick={copyShareLink}
-                        className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-r-md transition-colors"
+                        className="bg-[#1D3557] hover:bg-[#F1EDE5] hover:text-black text-[#F1EDE5] px-3 py-2 rounded-r-md transition-colors"
                       >
                         {copied ? 'Copied!' : 'Copy'}
                       </button>
@@ -154,17 +154,17 @@ export default function PostDetailPage() {
                   href={shareUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full bg-green-600 hover:bg-green-700 text-white text-center px-4 py-2 rounded-md transition-colors"
+                  className="block w-full bg-[#1D3557] hover:bg-[#F1EDE5] hover:text-black text-[#F1EDE5] text-center px-4 py-2 rounded-md transition-colors"
                 >
                   View Public Page
                 </a>
               </div>
               
               <div className="mt-6 pt-6 border-t border-gray-200">
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-700">
                   Created on {new Date(post.createdAt).toLocaleDateString()}
                 </p>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-700 mt-1">
                   {messages.length} messages received
                 </p>
               </div>
@@ -179,8 +179,8 @@ export default function PostDetailPage() {
               
               {messages.length === 0 ? (
                 <div className="text-center py-8">
-                  <p className="text-gray-500 mb-4">No messages received yet.</p>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-gray-700 mb-4">No messages received yet.</p>
+                  <p className="text-sm text-gray-700">
                     Share the link with people to start receiving anonymous messages.
                   </p>
                 </div>
@@ -192,7 +192,7 @@ export default function PostDetailPage() {
                       className="bg-gray-50 p-4 rounded-md border border-gray-200"
                     >
                       <p className="text-gray-800 whitespace-pre-wrap">{message.content}</p>
-                      <p className="text-xs text-gray-400 mt-2">
+                      <p className="text-xs text-gray-700 mt-2">
                         {new Date(message.createdAt).toLocaleString()}
                       </p>
                     </div>

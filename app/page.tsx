@@ -20,7 +20,7 @@ export default async function HomePage() {
             <h2 className="text-2xl font-semibold">Upcoming Events</h2>
             <Link
               href="/events" 
-              className="text-green-600 hover:text-green-800"
+              className="text-[#F1EDE5] hover:text-green-800"
             >
               View all events &rarr;
             </Link>
@@ -33,7 +33,7 @@ export default async function HomePage() {
               ))}
             </div>
           ) : (
-            <p className="text-center text-gray-500 py-8">No upcoming events at the moment. Check back soon!</p>
+            <p className="text-center text-[#F1EDE5] py-8">No upcoming events at the moment. Check back soon!</p>
           )}
         </div>
       </section>
@@ -42,7 +42,7 @@ export default async function HomePage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <div className="mb-4 sm:mb-0">
-              <p className="text-xs lg:text-sm text-gray-500">
+              <p className="text-xs lg:text-sm text-[#F1EDE5]">
                 &copy; {new Date().getFullYear()} The Anonymous Mic. All rights
                 reserved.
               </p>
@@ -50,19 +50,19 @@ export default async function HomePage() {
             <div className="lg:flex space-x-6 hidden">
             <a
                 href="#"
-                className="text-sm text-gray-500 hover:text-green-600"
+                className="text-sm text-[#F1EDE5] hover:text-[#F1EDE5]"
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-sm text-gray-500 hover:text-green-600"
+                className="text-sm text-[#F1EDE5] hover:text-[#F1EDE5]"
               >
                 Terms of Service
               </a>
               <a
                 href="/about"
-                className="text-sm text-gray-500 hover:text-green-600"
+                className="text-sm text-[#F1EDE5] hover:text-[#F1EDE5]"
               >
                 About
               </a>

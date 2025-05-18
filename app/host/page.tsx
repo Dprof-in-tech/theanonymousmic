@@ -28,7 +28,7 @@ export default function HostPage() {
                   Ogagaoghene Kennedy (Dr. Ken)
                 </h2>{" "}
                 {/* Replace with actual host name */}
-                <p className="text-gray-300 mb-4">
+                <p className="text-[#F1EDE5] mb-4">
                   Founder & Host of The Anonymous Mic
                 </p>
                 <div className="flex space-x-4 mb-6">
@@ -37,7 +37,7 @@ export default function HostPage() {
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-green-600"
+                    className="text-[#F1EDE5] hover:text-[#F1EDE5]"
                   >
                     Twitter
                   </a>
@@ -45,7 +45,7 @@ export default function HostPage() {
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-green-600"
+                    className="text-[#F1EDE5] hover:text-[#F1EDE5]"
                   >
                     Instagram
                   </a>
@@ -53,7 +53,7 @@ export default function HostPage() {
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-green-600"
+                    className="text-[#F1EDE5] hover:text-[#F1EDE5]"
                   >
                     LinkedIn
                   </a>
@@ -123,7 +123,7 @@ export default function HostPage() {
         </div>
 
         <div className="mt-8 text-center">
-          <Link href="/" className="text-green-600 hover:text-green-800">
+          <Link href="/" className="text-[#F1EDE5] hover:text-green-800">
             &larr; Back to Home
           </Link>
         </div>

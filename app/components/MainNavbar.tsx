@@ -24,8 +24,8 @@ const MainNavbar: React.FC = () => {
                 href="/"
                 className={`${
                   isActive('/') 
-                    ? 'border-green-50 text-gray-300' 
-                    : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-300'
+                    ? 'border-green-50 text-[#F1EDE5]' 
+                    : 'border-transparent text-[#F1EDE5] hover:text-gray-200 hover:border-gray-300'
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Home
@@ -36,7 +36,7 @@ const MainNavbar: React.FC = () => {
                 className={`${
                   isActive('/about') 
                     ? 'border-green-50 text-gray-9300' 
-                    : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-300'
+                    : 'border-transparent text-[#F1EDE5] hover:text-gray-200 hover:border-gray-300'
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 About
@@ -46,8 +46,8 @@ const MainNavbar: React.FC = () => {
                 href="/host"
                 className={`${
                   isActive('/host') 
-                    ? 'border-green-50 text-gray-300' 
-                    : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-300'
+                    ? 'border-green-50 text-[#F1EDE5]' 
+                    : 'border-transparent text-[#F1EDE5] hover:text-gray-200 hover:border-gray-300'
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Host
@@ -58,7 +58,7 @@ const MainNavbar: React.FC = () => {
           <div className="flex items-center">
             <Link
               href="/admin"
-              className="hidden sm:block px-4 py-2 border border-green-60 text-green-60 rounded-md hover:bg-green-60 hover:text-white transition-colors"
+              className="hidden sm:block px-4 py-2 border border-green-60 text-green-60 rounded-md hover:bg-green-60 hover:text-[#F1EDE5] transition-colors"
             >
               Admin
             </Link>
@@ -66,7 +66,7 @@ const MainNavbar: React.FC = () => {
             <div className="sm:hidden -mr-2 flex items-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
+                className="inline-flex items-center justify-center p-2 rounded-md text-[#F1EDE5] hover:text-[#F1EDE5] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
               >
                 <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
                 <svg

@@ -59,7 +59,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ uniqueLink }) => {
         </p>
         <button
           onClick={() => setSubmitted(false)}
-          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md transition-colors"
+          className="bg-[#1D3557] hover:bg-[#F1EDE5] hover:text-black text-[#F1EDE5] px-6 py-2 rounded-md transition-colors"
         >
           Send Another Message
         </button>
@@ -89,7 +89,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ uniqueLink }) => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className={`w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md transition-colors ${
+        className={`w-full bg-[#1D3557] hover:bg-[#F1EDE5] hover:text-black text-[#F1EDE5] px-6 py-3 rounded-md transition-colors ${
           isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
         }`}
       >

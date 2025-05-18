@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createEvent, getAllEvents } from '@/lib/db';
+import { withAuth } from '../middleware';
 
 // GET /api/events - Get all events
 export async function GET() {
@@ -17,6 +18,7 @@ export async function GET() {
 
 // POST /api/events - Create a new event
 export async function POST(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     // In a real app, add authentication check here
     const { title, description, date, imageUrl, hostName, videoLink } = await req.json();
@@ -45,4 +47,4 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+  })}

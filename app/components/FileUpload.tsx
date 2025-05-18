@@ -106,12 +106,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
               }}
             />
           ) : (
-            <div className="text-gray-500">Click to upload an image</div>
+            <div className="text-gray-700">Click to upload an image</div>
           )}
           
           {isUploading && (
             <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-              <div className="text-white">Uploading...</div>
+              <div className="text-[#F1EDE5]">Uploading...</div>
             </div>
           )}
         </div>
@@ -139,7 +139,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         <p className="text-sm text-red-600 mt-2">{error}</p>
       )}
       
-      <p className="text-xs text-gray-500 mt-2">
+      <p className="text-xs text-gray-700 mt-2">
         Upload a JPG, PNG, GIF, or WEBP (max 5MB).
       </p>
     </div>

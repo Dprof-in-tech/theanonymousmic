@@ -50,16 +50,16 @@ export default function EventsPage() {
   };
   
   return (
-    <div className="container mx-auto px-4 py-8 bg-[#efefef] h-screen">
+    <div className="w-full px-4 py-8 bg-[#efefef] h-screen">
       <div className="flex flex-col gap-4 lg:flex-row justify-between items-center mb-8">
         <h1 className="text-2xl font-bold">Manage Events</h1>
         <div className="flex space-x-4 items-center">
-          <Link href="/admin" className="text-green-600 hover:text-green-800">
+          <Link href="/admin" className="text-gray-700 hover:text-green-800">
             &larr; Back to Dashboard
           </Link>
           <Link
             href="/admin/events/new"
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors"
+            className="bg-[#1D3557] hover:bg-[#F1EDE5] hover:text-black text-[#F1EDE5] px-4 py-2 rounded-md transition-colors"
           >
             Create New Event
           </Link>
@@ -67,17 +67,17 @@ export default function EventsPage() {
       </div>
       
       {loading ? (
-        <p className="text-center py-8">Loading events...</p>
+        <p className="text-center py-8 text-gray-700">Loading events...</p>
       ) : error ? (
         <div className="bg-red-50 p-4 rounded-md text-red-700">
           {error}
         </div>
       ) : events.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-gray-500 mb-4">No events created yet.</p>
+          <p className="text-gray-700 mb-4">No events created yet.</p>
           <Link
             href="/admin/events/new"
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition-colors"
+            className="bg-[#1D3557] hover:bg-[#F1EDE5] hover:text-black text-[#F1EDE5] px-4 py-2 rounded-md transition-colors"
           >
             Create Your First Event
           </Link>
@@ -87,16 +87,16 @@ export default function EventsPage() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                   Event
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                   Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                   Host
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -120,7 +120,7 @@ export default function EventsPage() {
                           {event.title}
                         </div>
                         {event.description && (
-                          <div className="text-sm text-gray-500 truncate max-w-xs">
+                          <div className="text-sm text-gray-700 truncate max-w-xs">
                             {event.description}
                           </div>
                         )}
@@ -138,7 +138,7 @@ export default function EventsPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <Link href={`/admin/events/${event.id}`} className="text-green-600 hover:text-green-900">
+                    <Link href={`/admin/events/${event.id}`} className="text-gray-700 hover:text-green-900">
                       Edit
                     </Link>
                   </td>

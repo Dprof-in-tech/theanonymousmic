@@ -33,7 +33,7 @@ export default async function PostPage({ params }: any) {
           
           <MessageForm uniqueLink={uniqueLink} />
           
-          <div className="mt-8 text-sm text-gray-500">
+          <div className="mt-8 text-sm text-[#F1EDE5]">
             <p>Your message will be completely anonymous.</p>
             <p>No login or personal information is collected.</p>
           </div>

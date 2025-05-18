@@ -50,7 +50,7 @@ export default function CreatePostPage() {
       }
       
       const post = await response.json();
-      console.log('post', post);
+     
       router.push(`/admin/posts/${post.id}`);
     } catch (err: any) {
       setError(err.message || 'Something went wrong. Please try again.');
@@ -62,7 +62,7 @@ export default function CreatePostPage() {
   return (
     <div className="w-full min-h-screen h-full flex flex-col items-center justify-center bg-[#efefef] px-4 py-8 ">
       <div className="flex items-center mb-8">
-        <Link href="/admin" className="text-green-600 hover:text-green-800 mr-2">
+        <Link href="/admin" className="text-[#F1EDE5] hover:text-green-800 mr-2">
           &larr; Back to Dashboard
         </Link>
       </div>
@@ -107,7 +107,7 @@ export default function CreatePostPage() {
                 placeholder="Enter person's display name (if different)"
                 disabled={isSubmitting}
               />
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-700">
                 If provided, this name will be displayed publicly instead of their full name.
               </p>
             </div>
@@ -122,7 +122,7 @@ export default function CreatePostPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md transition-colors ${
+              className={`w-full bg-[#1D3557] hover:bg-[#F1EDE5] hover:text-black text-[#F1EDE5] px-6 py-3 rounded-md transition-colors ${
                 isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createPost, getAllPosts } from '@/lib/db';
 import { randomBytes } from 'crypto';
+import { withAuth } from '../middleware';
 
 // Generate a unique link
 function generateUniqueLink(): string {
@@ -21,6 +22,7 @@ export async function GET() {
 
 // POST /api/posts - Create a new post (admin only)
 export async function POST(req: NextRequest) {
+  return withAuth(req, async (req) => {
   try {
     // In a real app, add authentication check here
     const { name, nickname, imageUrl } = await req.json();
@@ -50,4 +52,4 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+  })}
