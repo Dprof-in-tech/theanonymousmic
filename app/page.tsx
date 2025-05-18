@@ -9,7 +9,7 @@ export default async function HomePage() {
 
   return (
     <div className="w-full h-full">
-      <section className="min-h-screen h-full w-full bg-[url(/podcast.jpg)] bg-cover  lg:bg-cover bg-fixed relative">
+      <section className="min-h-screen h-full w-full bg-[url(/podcast-mobile1.jpg)] lg:bg-[url(/podcast.jpg)] bg-contain bg-no-repeat  lg:bg-cover bg-fixed relative">
         <AnimatedText />
       </section>
 
