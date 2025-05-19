@@ -58,7 +58,7 @@ export default function AboutPage() {
             <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
             <p>
               If you have any questions or concerns about The Anonymous Mic, please feel free to 
-              reach out to us at <a href="mailto:contact@theanonymousmic.com" className="text-[#F1EDE5] hover:underline">contact@theanonymousmic.com</a>.
+              reach out to us at <a href="mailto:myanonymousmic2020@gmail.com" className="text-[#F1EDE5] hover:underline">myanonymousmic2020@gmail.com</a>.
             </p>
           </section>
         </div>
