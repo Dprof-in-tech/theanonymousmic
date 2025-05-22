@@ -13,13 +13,13 @@ export default async function HomePage() {
         <AnimatedText />
       </section>
 
-        {/* Events Section */}
-        <section className="bg-none backdrop-blur-lg px-8 py-12">
+      {/* Events Section */}
+      <section className="bg-none backdrop-blur-lg px-8 py-12">
         <div className="container mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-semibold">Upcoming Events</h2>
             <Link
-              href="/events" 
+              href="/events"
               className="text-[#F1EDE5] hover:text-green-800"
             >
               View all events &rarr;
@@ -28,12 +28,14 @@ export default async function HomePage() {
 
           {events.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {events.map((event) => (
+              {events.slice(0, 3).map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
             </div>
           ) : (
-            <p className="text-center text-[#F1EDE5] py-8">No upcoming events at the moment. Check back soon!</p>
+            <p className="text-center text-[#F1EDE5] py-8">
+              No upcoming events at the moment. Check back soon!
+            </p>
           )}
         </div>
       </section>
@@ -48,7 +50,7 @@ export default async function HomePage() {
               </p>
             </div>
             <div className="lg:flex space-x-6 hidden">
-            <a
+              <a
                 href="#"
                 className="text-sm text-[#F1EDE5] hover:text-[#F1EDE5]"
               >
