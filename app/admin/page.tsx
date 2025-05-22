@@ -336,6 +336,11 @@ export default function AdminPage() {
               ))}
             </tbody>
           </table>
+          <div className='my-4 flex mx-auto w-fit justify-between gap-[4rem]'>
+        <Link href='/admin/events'>
+      <p className='text-black hover:text-blue-500 cursor-pointer hover:underline'>View all Events</p>
+      </Link>
+      </div>
         </div>
       )}
     </div>

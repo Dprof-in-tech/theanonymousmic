@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
@@ -130,6 +131,61 @@ export async function createEvent(eventData: {
   } catch (error) {
     console.error('Database error:', error);
     throw new Error('Failed to create event');
+  }
+}
+
+export async function editEvent(
+  id: number,
+  eventData: {
+    title?: string;
+    description?: string;
+    date?: string;
+    imageUrl?: string;
+    hostName?: string;
+    videoLink?: string;
+  }
+) {
+  try {
+    // First, get the current event to use as base
+    const currentEvent = await sql`
+      SELECT * FROM events WHERE id = ${id}
+    `;
+    
+    if (currentEvent.rows.length === 0) {
+      throw new Error(`Event with ID ${id} not found`);
+    }
+    
+    // Extract current values
+    const current = currentEvent.rows[0];
+    
+    // Use provided values or fall back to current values
+    const { title, description, date, imageUrl, hostName, videoLink } = eventData;
+    
+    const finalTitle = title !== undefined ? title : current.title;
+    const finalDescription = description !== undefined ? description : current.description;
+    const finalDate = date !== undefined ? date : current.date;
+    const finalImageUrl = imageUrl !== undefined ? imageUrl : current.image_url;
+    const finalHostName = hostName !== undefined ? hostName : current.host_name;
+    const finalVideoLink = videoLink !== undefined ? videoLink : current.video_link;
+    
+    // Update all fields at once
+    const result = await sql`
+      UPDATE events
+      SET 
+        title = ${finalTitle},
+        description = ${finalDescription},
+        date = ${finalDate},
+        image_url = ${finalImageUrl},
+        host_name = ${finalHostName},
+        video_link = ${finalVideoLink}
+      WHERE id = ${id}
+      RETURNING id, title, description, date, image_url as "imageUrl", host_name as "hostName", video_link as "videoLink", created_at as "createdAt";
+    `;
+    
+    return result.rows[0];
+  } catch (error: any) {
+    console.error('Database error:', error);
+    throw new Error(`Failed to update event: ${error.message}`);
   }
 }
 

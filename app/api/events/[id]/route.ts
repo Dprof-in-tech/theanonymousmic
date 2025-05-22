@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
-import { getEventById } from '@/lib/db';
+import { editEvent, getEventById } from '@/lib/db';
+import { withAuth } from '../../middleware';
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
@@ -22,4 +24,57 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
     console.error('Error fetching event:', error);
     return NextResponse.json({ error: 'Failed to fetch event' }, { status: 500 });
   }
+}
+
+// PUT /api/events/[id] - Edit an existing event
+export async function PUT(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  return withAuth(req, async (req) => {
+    try {
+      const { id } = await context.params;
+
+      const eventId = parseInt(id, 10);
+   
+      
+      if (isNaN(eventId)) {
+        return NextResponse.json(
+          { error: 'Invalid event ID' },
+          { status: 400 }
+        );
+      }
+      
+      // Parse request body
+      const { title, description, date, imageUrl, hostName, videoLink } = await req.json();
+      
+      if (!title || !date || !imageUrl || !hostName) {
+        return NextResponse.json(
+          { error: 'Title, date, image URL, and host name are required' },
+          { status: 400 }
+        );
+      }
+      
+      // Call the editEvent function with ID and event data
+      const event = await editEvent(
+        eventId,
+        {
+          title,
+          description,
+          date,
+          imageUrl,
+          hostName,
+          videoLink,
+        }
+      );
+      
+      return NextResponse.json(event);
+    } catch (error: any) {
+      console.error('Error editing event:', error);
+      return NextResponse.json(
+        { error: error.message || 'Failed to edit event' },
+        { status: 500 }
+      );
+    }
+  });
 }
