@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
+import { put } from '@vercel/blob';
 import { randomUUID } from 'crypto';
-import { existsSync } from 'fs';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,6 +13,23 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+      return NextResponse.json(
+        { error: 'Invalid file type. Please upload an image (JPEG, PNG, GIF, WEBP).' },
+        { status: 400 }
+      );
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      return NextResponse.json(
+        { error: 'File size too large. Maximum size is 5MB.' },
+        { status: 400 }
+      );
+    }
     
     // Get file extension
     const fileExtension = file.name.split('.').pop() || '';
@@ -22,50 +37,27 @@ export async function POST(request: NextRequest) {
     // Generate a unique filename
     const uniqueFilename = `${randomUUID()}.${fileExtension}`;
     
-    // Define the upload directory path
-    const uploadDir = join(process.cwd(), 'public', 'uploads');
-    
-    // Create uploads directory if it doesn't exist
     try {
-      if (!existsSync(uploadDir)) {
-        await mkdir(uploadDir, { recursive: true });
-        console.log('Created uploads directory');
-      }
-    } catch (error) {
-      console.error('Error creating uploads directory:', error);
-      return NextResponse.json(
-        { error: 'Failed to create uploads directory' },
-        { status: 500 }
-      );
-    }
-    
-    // Convert the file to an ArrayBuffer
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    
-    // Write the file to the uploads directory
-    try {
-      const filePath = join(uploadDir, uniqueFilename);
-      await writeFile(filePath, buffer);
-      
-      // Return the path to the file
-      const fileUrl = `/uploads/${uniqueFilename}`;
+      // Upload to Vercel Blob Storage
+      const blob = await put(uniqueFilename, file, {
+        access: 'public',
+      });
       
       return NextResponse.json({ 
         success: true, 
-        fileUrl: fileUrl
+        fileUrl: blob.url
       });
     } catch (error) {
-      console.error('Error writing file:', error);
+      console.error('Error uploading to Vercel Blob:', error);
       return NextResponse.json(
-        { error: 'Failed to write file' },
+        { error: 'Failed to upload file to cloud storage' },
         { status: 500 }
       );
     }
   } catch (error) {
-    console.error('Error uploading file:', error);
+    console.error('Error processing upload:', error);
     return NextResponse.json(
-      { error: 'Failed to upload file' },
+      { error: 'Failed to process upload' },
       { status: 500 }
     );
   }
