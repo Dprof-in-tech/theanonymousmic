@@ -33,9 +33,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
       return;
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      setError('File size too large. Maximum size is 5MB.');
+    // Validate file size (max 2MB for database storage)
+    if (file.size > 2 * 1024 * 1024) {
+      setError('File size too large. Maximum size is 2MB.');
       return;
     }
 
@@ -140,7 +140,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       )}
       
       <p className="text-xs text-gray-700 mt-2">
-        Upload a JPG, PNG, GIF, or WEBP (max 5MB).
+        Upload a JPG, PNG, GIF, or WEBP (max 2MB).
       </p>
     </div>
   );

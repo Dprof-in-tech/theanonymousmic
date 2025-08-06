@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { put } from '@vercel/blob';
-import { randomUUID } from 'crypto';
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,34 +21,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
+    // Validate file size (max 2MB for base64 storage)
+    if (file.size > 2 * 1024 * 1024) {
       return NextResponse.json(
-        { error: 'File size too large. Maximum size is 5MB.' },
+        { error: 'File size too large. Maximum size is 2MB for database storage.' },
         { status: 400 }
       );
     }
     
-    // Get file extension
-    const fileExtension = file.name.split('.').pop() || '';
-    
-    // Generate a unique filename
-    const uniqueFilename = `${randomUUID()}.${fileExtension}`;
-    
     try {
-      // Upload to Vercel Blob Storage
-      const blob = await put(uniqueFilename, file, {
-        access: 'public',
-      });
+      // Convert file to base64
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const base64 = buffer.toString('base64');
+      
+      // Create data URL for the image
+      const dataUrl = `data:${file.type};base64,${base64}`;
       
       return NextResponse.json({ 
         success: true, 
-        fileUrl: blob.url
+        fileUrl: dataUrl
       });
     } catch (error) {
-      console.error('Error uploading to Vercel Blob:', error);
+      console.error('Error processing file:', error);
       return NextResponse.json(
-        { error: 'Failed to upload file to cloud storage' },
+        { error: 'Failed to process uploaded file' },
         { status: 500 }
       );
     }
