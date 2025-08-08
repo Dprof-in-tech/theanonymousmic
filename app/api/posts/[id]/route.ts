@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/api/posts/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { getPostById, deletePost } from '@/lib/db';

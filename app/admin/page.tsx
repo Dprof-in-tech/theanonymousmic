@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Post {
   id: number;
@@ -317,10 +318,12 @@ export default function AdminPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex h-10 w-10 relative">
-                        <img
+                        <Image
                           src={post.imageUrl}
                           alt={post.name}
                           className="rounded-full w-full h-full object-cover"
+                          width={40}
+                          height={40}
                         />
                       </div>
                       <div className="ml-4">

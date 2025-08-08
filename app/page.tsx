@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getAllEvents } from "@/lib/db";
 import EventCard from "./components/EventCard";
 import AnimatedText from "./components/AnimatedText";

@@ -2,6 +2,7 @@
 import { getPostByUniqueLink } from '@/lib/db';
 import { notFound } from 'next/navigation';
 import MessageForm from '@/app/components/MessageForm';
+import Image from 'next/image';
 
 // Use 'any' type to bypass TypeScript checking
 export default async function PostPage({ params }: any) {
@@ -21,10 +22,12 @@ export default async function PostPage({ params }: any) {
       <div className="bg-white rounded-lg shadow-md w-full lg:w-[42%] mt-24 overflow-hidden">
         <div className="p-6 text-center">
           <div className="mb-6 mx-auto relative w-40 h-40 rounded-full overflow-hidden">
-            <img
+            <Image
               src={post.imageUrl}
               alt={displayName}
               className="rounded-full object-cover w-full h-full"
+              width={160}
+              height={160}
             />
           </div>
           

@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
 
 interface Post {
   id: number;
@@ -117,10 +118,12 @@ export default function PostDetailPage() {
           <div className="bg-white rounded-lg shadow-md overflow-hidden sticky top-8 text-black">
             <div className="p-6">
               <div className="mb-6 mx-auto relative w-32 h-32 rounded-full overflow-hidden">
-                <img
+                <Image
                   src={post.imageUrl}
                   alt={displayName}
                   className="rounded-full"
+                  width={128}
+                  height={128}
                 />
               </div>
               
