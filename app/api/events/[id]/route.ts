@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
-import { editEvent, getEventById } from '@/lib/db';
+import { editEvent, getEventById, deleteEvent } from '@/lib/db';
 import { withAuth } from '../../middleware';
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
@@ -73,6 +73,47 @@ export async function PUT(
       console.error('Error editing event:', error);
       return NextResponse.json(
         { error: error.message || 'Failed to edit event' },
+        { status: 500 }
+      );
+    }
+  });
+}
+
+// DELETE /api/events/[id] - Delete an event
+export async function DELETE(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  return withAuth(req, async () => {
+    try {
+      const { id } = await context.params;
+      const eventId = parseInt(id, 10);
+      
+      if (isNaN(eventId)) {
+        return NextResponse.json(
+          { error: 'Invalid event ID' },
+          { status: 400 }
+        );
+      }
+
+      await deleteEvent(eventId);
+      
+      return NextResponse.json(
+        { message: 'Event deleted successfully' },
+        { status: 200 }
+      );
+    } catch (error: any) {
+      console.error('Error deleting event:', error);
+      
+      if (error.message === 'Event not found') {
+        return NextResponse.json(
+          { error: 'Event not found' },
+          { status: 404 }
+        );
+      }
+      
+      return NextResponse.json(
+        { error: 'Failed to delete event' },
         { status: 500 }
       );
     }

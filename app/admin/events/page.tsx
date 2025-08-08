@@ -20,6 +20,7 @@ export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
   
   // In a real app, add authentication check here
   
@@ -47,6 +48,30 @@ export default function EventsPage() {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString();
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Are you sure you want to delete this event? This action cannot be undone.')) {
+      return;
+    }
+
+    setDeletingId(id);
+    try {
+      const response = await fetch(`/api/events/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete event');
+      }
+
+      // Remove the event from the local state
+      setEvents(events.filter(event => event.id !== id));
+    } catch (err: any) {
+      setError(err.message || 'Failed to delete event');
+    } finally {
+      setDeletingId(null);
+    }
   };
   
   return (
@@ -138,9 +163,18 @@ export default function EventsPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <Link href={`/admin/events/${event.id}`} className="text-gray-700 hover:text-green-900">
-                      Edit
-                    </Link>
+                    <div className="flex space-x-3">
+                      <Link href={`/admin/events/${event.id}`} className="text-gray-700 hover:text-green-900">
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(event.id)}
+                        disabled={deletingId === event.id}
+                        className="text-red-600 hover:text-red-900 disabled:text-red-300"
+                      >
+                        {deletingId === event.id ? 'Deleting...' : 'Delete'}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

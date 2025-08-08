@@ -30,6 +30,7 @@ export default function AdminPage() {
   });
   const [authError, setAuthError] = useState<string | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
   
   // Check if user is already authenticated on load
   useEffect(() => {
@@ -159,6 +160,34 @@ export default function AdminPage() {
       setError(err.message || 'Something went wrong');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeletePost = async (id: number) => {
+    if (!window.confirm('Are you sure you want to delete this post? This will also delete all messages for this person. This action cannot be undone.')) {
+      return;
+    }
+
+    setDeletingId(id);
+    try {
+      const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+      const response = await fetch(`/api/posts/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete post');
+      }
+
+      // Remove the post from the local state
+      setPosts(posts.filter(post => post.id !== id));
+    } catch (err: any) {
+      setError(err.message || 'Failed to delete post');
+    } finally {
+      setDeletingId(null);
     }
   };
   
@@ -330,6 +359,13 @@ export default function AdminPage() {
                       >
                         Share Link
                       </a>
+                      <button
+                        onClick={() => handleDeletePost(post.id)}
+                        disabled={deletingId === post.id}
+                        className="text-red-600 hover:text-red-900 disabled:text-red-300"
+                      >
+                        {deletingId === post.id ? 'Deleting...' : 'Delete'}
+                      </button>
                     </div>
                   </td>
                 </tr>

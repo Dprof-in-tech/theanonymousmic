@@ -1,8 +1,43 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { sql } from '@vercel/postgres';
+import { v2 as cloudinary } from 'cloudinary';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Helper function to extract public_id from Cloudinary URL
+function extractPublicIdFromUrl(imageUrl: string): string | null {
+  try {
+    // Cloudinary URLs format: https://res.cloudinary.com/{cloud_name}/image/upload/v{version}/{folder}/{public_id}.{format}
+    const urlParts = imageUrl.split('/');
+    const uploadIndex = urlParts.findIndex(part => part === 'upload');
+    
+    if (uploadIndex === -1) return null;
+    
+    // Get everything after 'upload/v{version}/' or 'upload/'
+    const afterUpload = urlParts.slice(uploadIndex + 1);
+    
+    // Skip version if present (starts with 'v' followed by numbers)
+    const startIndex = afterUpload[0]?.match(/^v\d+$/) ? 1 : 0;
+    const pathParts = afterUpload.slice(startIndex);
+    
+    // Join the path and remove file extension
+    const fullPath = pathParts.join('/');
+    const publicId = fullPath.replace(/\.[^/.]+$/, ''); // Remove file extension
+    
+    return publicId;
+  } catch (error) {
+    console.error('Error extracting public_id from URL:', error);
+    return null;
+  }
+}
 
 // Helper functions for posts
 export async function createPost(postData: {
@@ -216,6 +251,88 @@ export async function getEventById(id: number) {
   } catch (error) {
     console.error('Database error:', error);
     throw new Error('Failed to get event by ID');
+  }
+}
+
+export async function deleteEvent(id: number) {
+  try {
+    // First, get the event to retrieve the image URL
+    const eventResult = await sql`
+      SELECT image_url as "imageUrl" FROM events WHERE id = ${id};
+    `;
+    
+    if (eventResult.rows.length === 0) {
+      throw new Error('Event not found');
+    }
+    
+    const imageUrl = eventResult.rows[0].imageUrl;
+    
+    // Delete from database
+    const deleteResult = await sql`
+      DELETE FROM events
+      WHERE id = ${id}
+      RETURNING id;
+    `;
+    
+    // Delete image from Cloudinary if it's a Cloudinary URL
+    if (imageUrl && imageUrl.includes('cloudinary.com')) {
+      const publicId = extractPublicIdFromUrl(imageUrl);
+      if (publicId) {
+        try {
+          await cloudinary.uploader.destroy(publicId);
+          console.log(`Deleted image from Cloudinary: ${publicId}`);
+        } catch (cloudinaryError) {
+          console.error('Failed to delete image from Cloudinary:', cloudinaryError);
+          // Don't throw error here - database deletion was successful
+        }
+      }
+    }
+    
+    return deleteResult.rows[0];
+  } catch (error) {
+    console.error('Database error:', error);
+    throw new Error('Failed to delete event');
+  }
+}
+
+export async function deletePost(id: number) {
+  try {
+    // First, get the post to retrieve the image URL
+    const postResult = await sql`
+      SELECT image_url as "imageUrl" FROM posts WHERE id = ${id};
+    `;
+    
+    if (postResult.rows.length === 0) {
+      throw new Error('Post not found');
+    }
+    
+    const imageUrl = postResult.rows[0].imageUrl;
+    
+    // Delete from database (this will cascade delete messages due to foreign key constraint)
+    const deleteResult = await sql`
+      DELETE FROM posts
+      WHERE id = ${id}
+      RETURNING id;
+    `;
+    
+    // Delete image from Cloudinary if it's a Cloudinary URL
+    if (imageUrl && imageUrl.includes('cloudinary.com')) {
+      const publicId = extractPublicIdFromUrl(imageUrl);
+      if (publicId) {
+        try {
+          await cloudinary.uploader.destroy(publicId);
+          console.log(`Deleted image from Cloudinary: ${publicId}`);
+        } catch (cloudinaryError) {
+          console.error('Failed to delete image from Cloudinary:', cloudinaryError);
+          // Don't throw error here - database deletion was successful
+        }
+      }
+    }
+    
+    return deleteResult.rows[0];
+  } catch (error) {
+    console.error('Database error:', error);
+    throw new Error('Failed to delete post');
   }
 }
 
