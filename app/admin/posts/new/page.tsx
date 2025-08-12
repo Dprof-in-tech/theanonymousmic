@@ -48,10 +48,8 @@ export default function CreatePostPage() {
         const data = await response.json();
         throw new Error(data.error || 'Failed to create post');
       }
-      
-      const post = await response.json();
      
-      router.push(`/admin/posts/${post.id}`);
+      router.push(`/admin`);
     } catch (err: any) {
       setError(err.message || 'Something went wrong. Please try again.');
     } finally {
