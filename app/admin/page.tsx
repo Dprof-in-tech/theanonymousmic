@@ -9,6 +9,7 @@ interface Post {
   id: number;
   name: string;
   nickname: string | null;
+  description: string | null;
   imageUrl: string;
   uniqueLink: string;
   createdAt: string;
@@ -333,6 +334,11 @@ export default function AdminPage() {
                         <div className="text-sm text-gray-700">
                           {post.nickname ? post.name : ''}
                         </div>
+                        {post.description && (
+                          <div className="text-xs text-gray-500 mt-1 max-w-xs truncate">
+                            {post.description}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </td>

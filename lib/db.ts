@@ -43,16 +43,17 @@ function extractPublicIdFromUrl(imageUrl: string): string | null {
 export async function createPost(postData: {
   name: string;
   nickname?: string;
+  description?: string;
   imageUrl: string;
   uniqueLink: string;
 }) {
   try {
-    const { name, nickname, imageUrl, uniqueLink } = postData;
+    const { name, nickname, description, imageUrl, uniqueLink } = postData;
     
     const result = await sql`
-      INSERT INTO posts (name, nickname, image_url, unique_link)
-      VALUES (${name}, ${nickname || null}, ${imageUrl}, ${uniqueLink})
-      RETURNING id, name, nickname, image_url as "imageUrl", unique_link as "uniqueLink", created_at as "createdAt";
+      INSERT INTO posts (name, nickname, description, image_url, unique_link)
+      VALUES (${name}, ${nickname || null}, ${description || null}, ${imageUrl}, ${uniqueLink})
+      RETURNING id, name, nickname, description, image_url as "imageUrl", unique_link as "uniqueLink", created_at as "createdAt";
     `;
     
     return result.rows;
@@ -65,7 +66,7 @@ export async function createPost(postData: {
 export async function getPostByUniqueLink(uniqueLink: string) {
   try {
     const result = await sql`
-      SELECT id, name, nickname, image_url as "imageUrl", unique_link as "uniqueLink", created_at as "createdAt"
+      SELECT id, name, nickname, description, image_url as "imageUrl", unique_link as "uniqueLink", created_at as "createdAt"
       FROM posts
       WHERE unique_link = ${uniqueLink};
     `;
@@ -80,7 +81,7 @@ export async function getPostByUniqueLink(uniqueLink: string) {
 export async function getPostById(id: number) {
   try {
     const result = await sql`
-      SELECT id, name, nickname, image_url as "imageUrl", unique_link as "uniqueLink", created_at as "createdAt"
+      SELECT id, name, nickname, description, image_url as "imageUrl", unique_link as "uniqueLink", created_at as "createdAt"
       FROM posts
       WHERE id = ${id};
     `;
@@ -95,7 +96,7 @@ export async function getPostById(id: number) {
 export async function getAllPosts() {
   try {
     const result = await sql`
-      SELECT id, name, nickname, image_url as "imageUrl", unique_link as "uniqueLink", created_at as "createdAt"
+      SELECT id, name, nickname, description, image_url as "imageUrl", unique_link as "uniqueLink", created_at as "createdAt"
       FROM posts
       ORDER BY created_at DESC;
     `;
@@ -478,10 +479,16 @@ export async function initializeDatabase() {
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         nickname VARCHAR(255),
+        description TEXT,
         image_url VARCHAR(512) NOT NULL,
         unique_link VARCHAR(255) UNIQUE NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
+    `;
+
+    // Add description column if it doesn't exist (for existing tables)
+    await sql`
+      ALTER TABLE posts ADD COLUMN IF NOT EXISTS description TEXT;
     `;
     
     // Create messages table if it doesn't exist

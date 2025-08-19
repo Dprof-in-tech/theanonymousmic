@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   return withAuth(req, async (req) => {
   try {
     // In a real app, add authentication check here
-    const { name, nickname, imageUrl } = await req.json();
+    const { name, nickname, description, imageUrl } = await req.json();
     
     if (!name || !imageUrl) {
       return NextResponse.json(
@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
     const post = await createPost({
       name,
       nickname,
+      description,
       imageUrl,
       uniqueLink,
     });

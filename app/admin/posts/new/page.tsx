@@ -10,6 +10,7 @@ export default function CreatePostPage() {
   const router = useRouter();
   const [name, setName] = useState('');
   const [nickname, setNickname] = useState('');
+  const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('/placeholder-profile.jpg'); // Default placeholder
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -40,6 +41,7 @@ export default function CreatePostPage() {
         body: JSON.stringify({
           name,
           nickname: nickname || null,
+          description: description || null,
           imageUrl,
         }),
       });
@@ -107,6 +109,24 @@ export default function CreatePostPage() {
               />
               <p className="mt-1 text-sm text-gray-700">
                 If provided, this name will be displayed publicly instead of their full name.
+              </p>
+            </div>
+            
+            <div className="mb-4">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                Description (optional)
+              </label>
+              <textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 min-h-[100px]"
+                placeholder="Enter a brief description about this person"
+                disabled={isSubmitting}
+                rows={4}
+              />
+              <p className="mt-1 text-sm text-gray-700">
+                This description will be shown publicly alongside the person's profile.
               </p>
             </div>
             

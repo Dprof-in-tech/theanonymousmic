@@ -32,11 +32,14 @@ export default async function PostPage({ params }: any) {
           </div>
           
           <h1 className="text-2xl font-bold mb-2 text-black">{displayName}</h1>
+          {post.description && (
+            <p className="text-gray-700 mb-4">{post.description}</p>
+          )}
           <p className="text-gray-600 mb-6">Send an anonymous message</p>
           
           <MessageForm uniqueLink={uniqueLink} />
           
-          <div className="mt-8 text-sm text-[#F1EDE5]">
+          <div className="mt-8 text-sm text-gray-500">
             <p>Your message will be completely anonymous.</p>
             <p>No login or personal information is collected.</p>
           </div>

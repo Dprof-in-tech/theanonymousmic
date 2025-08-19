@@ -10,6 +10,7 @@ interface Post {
   id: number;
   name: string;
   nickname: string | null;
+  description: string | null;
   imageUrl: string;
   uniqueLink: string;
   createdAt: string;
@@ -129,7 +130,10 @@ export default function PostDetailPage() {
               
               <h1 className="text-xl font-bold text-center mb-2">{displayName}</h1>
               {post.nickname && (
-                <p className="text-gray-700 text-center mb-4">{post.name}</p>
+                <p className="text-gray-700 text-center mb-2">{post.name}</p>
+              )}
+              {post.description && (
+                <p className="text-gray-600 text-center mb-4 text-sm">{post.description}</p>
               )}
               
               <div className="mt-6">
