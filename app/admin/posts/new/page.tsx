@@ -126,7 +126,7 @@ export default function CreatePostPage() {
                 rows={4}
               />
               <p className="mt-1 text-sm text-gray-700">
-                This description will be shown publicly alongside the person's profile.
+                This description will be shown publicly alongside the person&apos;s profile.
               </p>
             </div>
             
